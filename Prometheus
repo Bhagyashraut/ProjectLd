@@ -1,1 +1,44 @@
+Great! Here's a ready-to-run script that will:
 
+Remove any broken previous Grafana install
+
+Add the official Grafana APT repository
+
+Install Grafana version 11.6.1 cleanly
+
+Start and enable the Grafana service
+
+✅ Grafana 11.6.1 Install Script for Ubuntu
+
+# Step 1: Remove any broken or partial installation
+sudo apt --fix-broken install -y
+sudo apt remove --purge grafana -y
+
+# Step 2: Install required dependencies
+sudo apt update
+sudo apt install -y apt-transport-https software-properties-common curl gnupg2
+
+# Step 3: Add Grafana GPG key and repo
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://packages.grafana.com/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/grafana.gpg
+
+echo "deb [signed-by=/etc/apt/keyrings/grafana.gpg] https://packages.grafana.com/oss/deb stable main" | \
+  sudo tee /etc/apt/sources.list.d/grafana.list
+
+# Step 4: Update apt and install specific version
+sudo apt update
+sudo apt install grafana=11.6.1 -y
+
+# Step 5: Enable and start Grafana
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+
+# Final check
+sudo systemctl status grafana-server
+✅ How to Use It:
+Open terminal
+
+
+After successful setup, open Grafana in your browser:
+
+http://localhost:3000
